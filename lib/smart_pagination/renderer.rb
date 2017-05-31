@@ -141,7 +141,7 @@ module SmartPagination
         wrapper  = @options[:wrapper]
         wrap_opt = { class: @options[:wrapper_class] }
         wrap_tag = links.html_safe
-        wrap_tag = tag wrapper, links, wrap_opt if wrapper.present?
+        wrap_tag = tag wrapper, wrap_tag, wrap_opt if wrapper.present?
 
         wrap_tag
       end
