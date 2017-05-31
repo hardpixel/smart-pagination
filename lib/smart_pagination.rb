@@ -1,18 +1,16 @@
+require 'smart_paginate'
 require 'smart_pagination/version'
+require 'smart_pagination/helper'
+require 'smart_pagination/renderer'
 
 module SmartPagination
-  autoload Render, 'smart_pagination/renderer'
-
-  # Render pagination links
-  def smart_pagination_for(collection, options={})
-    SmartPagination::Renderer.new(collection, options).render
+  class << self
+    def included(model_class)
+      model_class.send :include, SmartPaginate
+    end
   end
-
-  # Alias helper method
-  alias :pagination_for :smart_pagination_for
 end
 
 if defined? ActionView::Base
-  # Include action view helpers
-  ActionView::Base.send :include, SmartPagination
+  ActionView::Base.send :include, SmartPagination::Helper
 end
