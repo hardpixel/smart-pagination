@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'smart_paginate_helper/version'
+require 'smart_pagination/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'smart_paginate_helper'
-  spec.version       = SmartPaginateHelper::VERSION
+  spec.name          = 'smart_pagination'
+  spec.version       = SmartPagination::VERSION
   spec.authors       = ['Jonian Guveli']
   spec.email         = ['jonian@hardpixel.eu']
   spec.summary       = %q{View helper for SmartPaginate}
-  spec.description   = %q{View helper to create paginaation links for SmartPaginate.}
-  spec.homepage      = 'https://github.com/hardpixel/smart-paginate-helper'
+  spec.description   = %q{View helper to create pagination links for SmartPaginate.}
+  spec.homepage      = 'https://github.com/hardpixel/smart-pagination'
   spec.license       = 'MIT'
   spec.files         = Dir['{lib/**/*,[A-Z]*}']
   spec.bindir        = 'exe'

@@ -1,4 +1,4 @@
-# SmartPaginateHelper
+# SmartPagination
 
 TODO: Describe your gem
 
@@ -7,7 +7,7 @@ TODO: Describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'smart_paginate_helper'
+gem 'smart_pagination'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install smart_paginate_helper
+    $ gem install smart_pagination
 
 ## Usage
 
@@ -28,7 +28,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/hardpixel/smart-paginate-helper.
+Bug reports and pull requests are welcome on GitHub at https://github.com/hardpixel/smart-pagination.
 
 
 ## License
