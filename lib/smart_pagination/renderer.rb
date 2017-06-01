@@ -28,8 +28,8 @@ module SmartPagination
           wrapper:        'ul',
           wrapper_class:  'pagination',
           item_wrapper:   'li',
-          items_left:     3,
-          items_right:    3
+          inner_window:    2,
+          outer_window:    0
         }
       end
 
@@ -53,9 +53,41 @@ module SmartPagination
         @options[:pager_mode].present?
       end
 
-      # Check if all items visible
-      def all_visible?
-        total_pages <= @options[:items_left].to_i + @options[:items_right].to_i
+      # Get page numbers
+      def page_numbers
+        inner = @options[:inner_window].to_i
+        outer = @options[:outer_window].to_i
+        from  = current_page - inner
+        to    = current_page + inner
+
+        if to > total_pages
+          from -= to - total_pages
+          to    = total_pages
+        end
+
+        if from < 1
+          to   += 1 - from
+          from  = 1
+          to    = total_pages if to > total_pages
+        end
+
+        middle = from..to
+
+        if outer + 3 < middle.first
+          left = (1..(outer + 1)).to_a
+          left << :sep
+        else
+          left = 1...middle.first
+        end
+
+        if total_pages - outer - 2 > middle.last
+          right = ((total_pages - outer)..total_pages).to_a
+          right.unshift :sep
+        else
+          right = (middle.last + 1)..total_pages
+        end
+
+        left.to_a + middle.to_a + right.to_a
       end
 
       # Page link
@@ -97,29 +129,9 @@ module SmartPagination
         item_tag
       end
 
-      # Render items left
-      def items_left
-        items = @options[:items_left].to_i
-        items = total_pages if all_visible?
-
-        items.times.map { |page| page_link(page + 1) }.join
-      end
-
-      # Render items right
-      def items_right
-        return if all_visible?
-
-        left  = @options[:items_left].to_i
-        right = @options[:items_right].to_i
-        items = total_pages - left
-
-        items.times.map { |page| page_link(page + 1 + right) }.join
-      end
-
-      # Render items separator
-      def items_sep
-        return if all_visible?
-        item_link '...', {}, class: "#{@options[:item_class]} #{@options[:disabled_class]}".strip
+      # Render item separator
+      def item_sep
+        item_link '&hellip;', {}, class: "#{@options[:item_class]} #{@options[:disabled_class]}".strip
       end
 
       # Render content tag
@@ -154,7 +166,9 @@ module SmartPagination
 
       # Render pagination
       def pagination
-        items = [previous_link, items_left, items_sep, items_right, next_link]
+        items = page_numbers.map { |page| page == :sep ? item_sep : page_link(page) }
+        items = [previous_link, *items, next_link]
+
         wrapper items.map(&:to_s).join
       end
   end
