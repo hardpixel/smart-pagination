@@ -90,33 +90,41 @@ module SmartPagination
         left.to_a + middle.to_a + right.to_a
       end
 
+      # Get link params
+      def link_params(page)
+        if page.is_a? Integer
+          { page: page }
+        else
+          { page: @collection.send(:"#{page}_page") }
+        end
+      end
+
+      # Get link options
+      def link_options(page)
+        if page.is_a? Integer
+          active = @options[:active_class] if current_page? page
+          { class: "#{@options[:item_class]} #{active}".strip }
+        else
+          disabled   = @options[:disabled_class] unless @collection.send(:"#{page}_page?")
+          item_class = @options[:"#{page}_class"]
+
+          { class: "#{@options[:item_class]} #{item_class} #{disabled}".strip }
+        end
+      end
+
       # Page link
       def page_link(page)
-        params  = { page: page }
-        active  = @options[:active_class] if current_page? page
-        options = { class: "#{@options[:item_class]} #{active}".strip }
-
-        item_link page, params, options
+        item_link page, link_params(page), link_options(page)
       end
 
       # Previous link
       def previous_link
-        text     = @options[:previous_text]
-        params   = { page: @collection.previous_page }
-        disabled = @options[:disabled_class] unless @collection.previous_page?
-        options  = { class: "#{@options[:item_class]} #{@options[:previous_class]} #{disabled}".strip }
-
-        item_link text, params, options
+        item_link @options[:previous_text], link_params(:previous), link_options(:previous)
       end
 
       # Next link
       def next_link
-        text     = @options[:next_text]
-        params   = { page: @collection.next_page }
-        disabled = @options[:disabled_class] unless @collection.next_page?
-        options  = { class: "#{@options[:item_class]} #{@options[:next_class]} #{disabled}".strip }
-
-        item_link text, params, options
+        item_link @options[:next_text], link_params(:next), link_options(:next)
       end
 
       # Render item link
