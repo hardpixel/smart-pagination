@@ -1,6 +1,16 @@
 # SmartPagination
 
-TODO: Describe your gem
+SmartPagination adds view helpers for SmartPaginate. A simple, smart and clean pagination extension for Active Record and plain Ruby Arrays:
+
+- **Simple:** Easy to use, with a simple interface. It just does pagination, nothing more.
+- **Smart:** Can navigate through the pages without having to do an expensive count query. SmartPaginate will actually fetch one record more than needed and use it to determine if there's a next page.
+- **Clean:** The code is as minimal as possible while still useful. SmartPaginate does not auto include itself or monkey patch any classes.
+
+For more details you can check SmartPaginate at https://github.com/ppostma/smart_paginate.
+
+[![Gem Version](https://badge.fury.io/rb/smart_pagination.svg)](https://badge.fury.io/rb/smart_pagination)
+[![Build Status](https://travis-ci.org/hardpixel/smart-pagination.svg?branch=master)](https://travis-ci.org/hardpixel/smart-pagination)
+[![Code Climate](https://codeclimate.com/github/hardpixel/smart-pagination/badges/gpa.png)](https://codeclimate.com/github/hardpixel/smart-pagination)
 
 ## Installation
 
@@ -20,7 +30,53 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To enable pagination in an Active Record model, include the `SmartPagination` or `SmartPaginate` concern in your class:
+
+```ruby
+class User < ActiveRecord::Base
+  include SmartPagination
+end
+```
+
+Then you can use the paginate scope to paginate results:
+
+```ruby
+@users = User.paginate(page: params[:page], per_page: params[:per_page])
+```
+
+And finally you can use the `smart_pagination_for` or `pagination_for` helper in your views to render the pagination links:
+
+```ruby
+<%= smart_pagination_for(@users) %>
+```
+
+If you want to render only previous and next links you can use the `smart_pager_for` or `pager_for` helper in your views:
+
+```ruby
+<%= smart_pager_for(@users) %>
+```
+
+There are a number of options you can use to customize the pagination links. The default options are:
+
+```ruby
+options = {
+  pager_mode:     false,
+  item_class:     '',
+  previous_text:  '&laquo;',
+  previous_class: 'previous',
+  next_text:      '&raquo;',
+  next_class:     'next',
+  active_class:   'active',
+  disabled_class: 'disabled',
+  wrapper:        'ul',
+  wrapper_class:  'pagination',
+  item_wrapper:   'li',
+  inner_window:    2,
+  outer_window:    0
+}
+
+smart_pagination_for(@users, options)
+```
 
 ## Development
 
