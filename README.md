@@ -50,16 +50,23 @@ And finally you can use the `smart_pagination_for` or `pagination_for` helper in
 <%= smart_pagination_for(@users) %>
 ```
 
-If you want to render only previous and next links you can use the `smart_pager_for` or `pager_for` helper in your views:
+If you want to render only previous and next links, you can use the `smart_pager_for` or `pager_for` helper in your views:
 
 ```ruby
 <%= smart_pager_for(@users) %>
+```
+
+If you want to render the pagination information text (Displaying x of y Items), you can use the `smart_pagination_info_for` or `pagination_info_for` helper in your views:
+
+```ruby
+<%= smart_pagination_info_for(@users) %>
 ```
 
 There are a number of options you can use to customize the pagination links. The default options are:
 
 ```ruby
 options = {
+  info_mode:      false,
   pager_mode:     false,
   item_class:     '',
   previous_text:  '&laquo;',
