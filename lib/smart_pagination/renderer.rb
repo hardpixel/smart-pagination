@@ -48,6 +48,11 @@ module SmartPagination
         page.to_i == current_page
       end
 
+      # Get entries per page
+      def per_page
+        @collection.per_page.to_i
+      end
+
       # Check if pager mode enabled
       def pager_mode?
         @options[:pager_mode].present?
@@ -149,7 +154,7 @@ module SmartPagination
 
       # Render link tag
       def link_to(text, params={}, html_options={})
-        url = @context.url_for params.merge(per_page: @collection.per_page)
+        url = @context.url_for params.merge(per_page: per_page)
         opt = html_options.to_h
 
         opt.merge!(href: url) if params[:page].present?
