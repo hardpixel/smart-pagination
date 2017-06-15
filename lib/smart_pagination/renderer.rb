@@ -40,7 +40,7 @@ module SmartPagination
 
       # Get total pages
       def total_pages
-        @total_pages ||= @collection.total_pages
+        @total_pages ||= @collection.total_pages.to_i
       end
 
       # Check if current page
