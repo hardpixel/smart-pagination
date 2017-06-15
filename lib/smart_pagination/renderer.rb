@@ -9,7 +9,13 @@ module SmartPagination
 
     # Render pagination links
     def render
-      pager_mode? ? pager : pagination
+      if info_mode?
+        pagination_info
+      elsif pager_mode?
+        pager
+      else
+        pagination
+      end
     end
 
     private
@@ -17,6 +23,7 @@ module SmartPagination
       # Default options
       def default_options
         {
+          info_mode:      false,
           pager_mode:     false,
           item_class:     '',
           previous_text:  '&laquo;',
@@ -31,6 +38,15 @@ module SmartPagination
           inner_window:    2,
           outer_window:    0
         }
+      end
+
+      # Get collection name
+      def collection_name
+        if @collection.is_a? ActiveRecord::Relation
+          @collection.model_name.human(count: total_entries)
+        else
+          total_entries == 1 ? 'Item' : 'Items'
+        end
       end
 
       # Get current_page
@@ -53,9 +69,25 @@ module SmartPagination
         @collection.per_page.to_i
       end
 
+      # Get current entries
+      def current_entries
+        entries = current_page * per_page
+        entries < total_entries ? entries : total_entries
+      end
+
+      # Get total entries
+      def total_entries
+        @total_entries ||= @collection.total_entries.to_i
+      end
+
       # Check if pager mode enabled
       def pager_mode?
         @options[:pager_mode].present?
+      end
+
+      # Check if info mode enabled
+      def info_mode?
+        @options[:info_mode].present?
       end
 
       # Get page numbers
@@ -169,6 +201,14 @@ module SmartPagination
         wrap_tag = tag wrapper, wrap_tag, wrap_opt if wrapper.present?
 
         wrap_tag
+      end
+
+      # Render pagination info
+      def pagination_info
+        current = tag :strong, current_entries, class: 'current'
+        total   = tag :strong, total_entries, class: 'total'
+
+        "Displaying #{current} of #{total} #{collection_name}".html_safe
       end
 
       # Render pager
