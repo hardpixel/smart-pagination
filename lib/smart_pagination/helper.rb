@@ -17,7 +17,7 @@ module SmartPagination
     # Alias helper method
     alias :pager_for :smart_pager_for
 
-    # Render pagination info links
+    # Render pagination info text
     def smart_pagination_info_for(collection, options={})
       options = options.merge(info_mode: true)
       SmartPagination::Renderer.new(self, collection, options).render
