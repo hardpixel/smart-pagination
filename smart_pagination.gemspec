@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Jonian Guveli']
   spec.email         = ['jonian@hardpixel.eu']
   spec.summary       = %q{View helpers for SmartPaginate}
-  spec.description   = %q{Adds view helpers for SmartPaginate. A simple, smart and clean pagination extension for Active Record and plain Ruby Arrays.}
+  spec.description   = %q{View helpers for SmartPaginate. A simple, smart and clean pagination extension for Active Record and plain Ruby Arrays.}
   spec.homepage      = 'https://github.com/hardpixel/smart-pagination'
   spec.license       = 'MIT'
   spec.files         = Dir['{lib/**/*,[A-Z]*}']
