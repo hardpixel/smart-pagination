@@ -90,6 +90,12 @@ module SmartPagination
         @options[:info_mode].present?
       end
 
+      # Current url parameters
+      def url_params
+        url = URI.parse(@context.request.url)
+        Rack::Utils.parse_nested_query(url.query).symbolize_keys
+      end
+
       # Get page numbers
       def page_numbers
         inner = @options[:inner_window].to_i
@@ -186,7 +192,7 @@ module SmartPagination
 
       # Render link tag
       def link_to(text, params={}, html_options={})
-        url = @context.url_for params.merge(per_page: per_page)
+        url = @context.url_for url_params.merge(params)
         opt = html_options.to_h
 
         opt.merge!(href: url) if params[:page].present?
