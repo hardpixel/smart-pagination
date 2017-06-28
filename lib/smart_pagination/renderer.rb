@@ -92,8 +92,10 @@ module SmartPagination
 
       # Current url parameters
       def url_params
-        url = URI.parse(@context.request.url)
-        Rack::Utils.parse_nested_query(url.query).symbolize_keys
+        url    = URI.parse(@context.request.url)
+        params = Rack::Utils.parse_nested_query(url.query).symbolize_keys
+
+        params.except(:page)
       end
 
       # Get page numbers
@@ -135,11 +137,8 @@ module SmartPagination
 
       # Get link params
       def link_params(page)
-        if page.is_a? Integer
-          { page: page }
-        else
-          { page: @collection.send(:"#{page}_page") }
-        end
+        page = @collection.send(:"#{page}_page") unless page.is_a? Integer
+        { page: page }
       end
 
       # Get link options
@@ -192,10 +191,11 @@ module SmartPagination
 
       # Render link tag
       def link_to(text, params={}, html_options={})
-        url = @context.url_for url_params.merge(params)
+        prm = params.except(:page) if params[:page] == 1
+        url = @context.url_for url_params.merge(prm || params)
         opt = html_options.to_h
+        opt = opt.merge(href: url) if params[:page].present?
 
-        opt.merge!(href: url) if params[:page].present?
         tag :a, "#{text}".html_safe, opt
       end
 
