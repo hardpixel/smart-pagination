@@ -46,19 +46,19 @@ Then you can use the paginate scope to paginate results:
 
 And finally you can use the `smart_pagination_for` or `pagination_for` helper in your views to render the pagination links:
 
-```ruby
+```erb
 <%= smart_pagination_for(@users) %>
 ```
 
 If you want to render only previous and next links, you can use the `smart_pager_for` or `pager_for` helper in your views:
 
-```ruby
+```erb
 <%= smart_pager_for(@users) %>
 ```
 
 If you want to render the pagination information text (Displaying x of y Items), you can use the `smart_pagination_info_for` or `pagination_info_for` helper in your views:
 
-```ruby
+```erb
 <%= smart_pagination_info_for(@users) %>
 ```
 
@@ -91,9 +91,12 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/hardpixel/smart-pagination.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/hardpixel/smart-pagination. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## Code of Conduct
+
+Everyone interacting in the ActiveContent project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hardpixel/smart-pagination/blob/master/CODE_OF_CONDUCT.md).
