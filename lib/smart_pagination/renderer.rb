@@ -9,7 +9,9 @@ module SmartPagination
 
     # Render pagination links
     def render
-      if info_mode?
+      if auto_hide?
+        nil
+      elsif info_mode?
         pagination_info
       elsif pager_mode?
         pager
@@ -25,6 +27,7 @@ module SmartPagination
         {
           info_mode:      false,
           pager_mode:     false,
+          auto_hide:      false,
           item_class:     '',
           previous_text:  '&laquo;',
           previous_class: 'previous',
@@ -78,6 +81,11 @@ module SmartPagination
       # Get total entries
       def total_entries
         @total_entries ||= @collection.total_entries.to_i
+      end
+
+      # Check if should hide pagination
+      def auto_hide?
+        @options[:auto_hide].present? and total_pages < 2
       end
 
       # Check if pager mode enabled

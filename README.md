@@ -68,6 +68,7 @@ There are a number of options you can use to customize the pagination links. The
 options = {
   info_mode:      false,
   pager_mode:     false,
+  auto_hide:      false,
   item_class:     '',
   previous_text:  '&laquo;',
   previous_class: 'previous',
