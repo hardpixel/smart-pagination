@@ -6,7 +6,6 @@ module SmartPagination
   extend ActiveSupport::Autoload
   extend ActiveSupport::Concern
 
-  # Autoload modules
   autoload :Renderer
   autoload :Helper
 
@@ -15,7 +14,6 @@ module SmartPagination
   end
 end
 
-# Include action view helpers
 if defined? ActionView::Base
   ActionView::Base.send :include, SmartPagination::Helper
 end
