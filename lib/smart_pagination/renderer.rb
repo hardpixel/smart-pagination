@@ -138,7 +138,7 @@ module SmartPagination
         active = @options[:active_class] if current_page? page
         { class: "#{@options[:item_class]} #{active}".strip }
       else
-        disabled   = @options[:disabled_class] unless @collection.send(:"#{page}_page?")
+        disabled   = @options[:disabled_class] unless @collection.send(:"#{page}_page").present?
         item_class = @options[:"#{page}_class"]
 
         { class: "#{@options[:item_class]} #{item_class} #{disabled}".strip }
