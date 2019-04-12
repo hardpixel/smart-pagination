@@ -74,7 +74,7 @@ module SmartPagination
     end
 
     def auto_hide?
-      @options[:auto_hide].present? and total_pages < 2
+      @options[:auto_hide].present? && total_pages < 2
     end
 
     def pager_mode?
